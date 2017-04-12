@@ -1,0 +1,21 @@
+module distributedAuction {
+	interface AuctionClient {
+		void update(in string userID, in string text);
+	};
+	exception NameAlreadyUsed {};
+	exception UnknownID {};
+	interface AuctionServer {
+		string subscribe(in string userID, in AuctionClient c, in long clientType) 
+			raises (NameAlreadyUsed);
+		void unsubscribe(in string id, in long clientType) raises (UnknownID);
+		void comment(in string id, in string text) raises (UnknownID);
+		boolean isAuctionEmpty();
+		void setID(in string id);
+		void viewHighestBidder( in string ID );
+		void offer(in string ID, in string name,in  string description,in long price);
+		void bid ( in string ID, in long amount);
+		void viewAuctionStatus(in string id);
+		void viewBidStatus( in string id);
+		string sell();
+	};
+};
